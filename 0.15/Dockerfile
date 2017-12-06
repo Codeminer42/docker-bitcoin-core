@@ -46,6 +46,7 @@ COPY docker-entrypoint.sh /entrypoint.sh
 COPY rabbitmqadmin /usr/bin/rabbitmqadmin
 
 RUN chmod +x /usr/bin/rabbitmqadmin
+RUN ln -s /home/bitcoin/.bitcoin $BITCOIN_DATA
 
 ENTRYPOINT ["/entrypoint.sh"]
 

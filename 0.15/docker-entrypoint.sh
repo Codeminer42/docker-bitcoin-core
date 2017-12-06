@@ -9,6 +9,20 @@ fi
 
 if [ $(echo "$1" | cut -c1) = "-" ] || [ "$1" = "bitcoind" ]; then
   mkdir -p "$BITCOIN_DATA"
+
+	if [[ ! -s "$BITCOIN_DATA/bitcoin.conf" ]]; then
+		cat <<-EOF > "$BITCOIN_DATA/bitcoin.conf"
+    server=${BITCOIN_SERVER:-0}
+    daemon=1
+		printtoconsole=1
+		rpcallowip=::/0
+		rpcpassword=${BITCOIN_RPC_PASSWORD:-password}
+		rpcuser=${BITCOIN_RPC_USER:-bitcoin}
+    walletnotify=$BITCOIN_NOTIFY_CMD
+		EOF
+		chown bitcoin:bitcoin "$BITCOIN_DATA/bitcoin.conf"
+	fi
+
   chmod 700 "$BITCOIN_DATA"
   chown -R bitcoin "$BITCOIN_DATA"
 
