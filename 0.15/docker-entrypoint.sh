@@ -25,7 +25,8 @@ if [ $(echo "$1" | cut -c1) = "-" ] || [ "$1" = "bitcoind" ]; then
 
   chmod 700 "$BITCOIN_DATA"
   chown -R bitcoin "$BITCOIN_DATA"
-
+	ln -sfn "$BITCOIN_DATA" /home/bitcoin/.bitcoin
+	chown -h bitcoin:bitcoin /home/bitcoin/.bitcoin
   echo "$0: setting data directory to $BITCOIN_DATA"
 
   set -- "$@" -datadir="$BITCOIN_DATA"
