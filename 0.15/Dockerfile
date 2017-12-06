@@ -29,8 +29,8 @@ RUN curl -o /usr/local/bin/gosu -fSL https://github.com/tianon/gosu/releases/dow
 
 ENV BITCOIN_VERSION=0.15.1
 ENV BITCOIN_FOLDER_VERSION=0.15.1
-ENV BITCOIN_DATA=/data \
-  PATH=/opt/bitcoin-${BITCOIN_FOLDER_VERSION}/bin:$PATH
+ENV BITCOIN_DATA=/data
+ENV PATH=/opt/bitcoin-${BITCOIN_FOLDER_VERSION}/bin:$PATH
 
 RUN curl -SL https://bitcoin.org/laanwj-releases.asc | gpg --import \
   && curl -SLO https://bitcoin.org/bin/bitcoin-core-${BITCOIN_VERSION}/SHA256SUMS.asc \
@@ -46,7 +46,6 @@ COPY docker-entrypoint.sh /entrypoint.sh
 COPY rabbitmqadmin /usr/bin/rabbitmqadmin
 
 RUN chmod +x /usr/bin/rabbitmqadmin
-RUN ln -s /home/bitcoin/.bitcoin $BITCOIN_DATA
 
 ENTRYPOINT ["/entrypoint.sh"]
 
